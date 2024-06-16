@@ -1,0 +1,7 @@
+test_videos/
+frames/
+
+*.avi
+*.zip
+*.pt
+*.csv
