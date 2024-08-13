@@ -3,5 +3,5 @@ frames/
 
 *.avi
 *.zip
-*.pt
 *.csv
+yolov8n.pt
