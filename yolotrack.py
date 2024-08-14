@@ -9,7 +9,7 @@ import time  # The time module is easier for our purpose.
 import pandas as pd
 import argparse
 
-def process_video(video_path):
+def process_video(video_path, show_video):
 	# Load an official or custom model
 	model = YOLO('mut_v2.pt')  # Load an official Detect model
 	byte_tracker = sv.ByteTrack()
@@ -105,9 +105,10 @@ def process_video(video_path):
 
 		frame_count += 1
 
-		cv2.imshow('frame', annotated_frame)
-		if cv2.waitKey(1) & 0xFF == ord('q'):
-			break
+		if show_video:
+			cv2.imshow('frame', annotated_frame)
+			if cv2.waitKey(1) & 0xFF == ord('q'):
+				break
 
 	df = pd.DataFrame(delivered, columns=["delivered_event", "delivered_at_frame"])
 	df.to_csv(filename + "_delivered_results.csv", index=False)
@@ -125,6 +126,8 @@ if __name__ == '__main__':
 	parser.add_argument("-v", "--video", type=str, 
 			required=True)
 	
+	parser.add_argument("-s", "--show", action='store_true')
+	
 	args = parser.parse_args()
 
-	process_video(args.video)
+	process_video(args.video, args.show)
